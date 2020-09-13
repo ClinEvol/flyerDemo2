@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.mapper.AreaMapper" >
+
+    <resultMap id="baseResultMap" type="com.ujiuye.pojo.Area">
+        <id property="aid" column="aid"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="state" column="state"/>
+        <result property="createtime" column="createtime"/>
+    </resultMap>
+
+
+
+    <select id="list" resultMap="baseResultMap">
+        SELECT * FROM area
+    </select>
+
+    <select id="getById" resultMap="baseResultMap">
+        SELECT * FROM area WHERE aid=#{id}
+    </select>
+
+    <insert id="save" parameterType="com.ujiuye.pojo.Area">
+       INSERT INTO `area`(`aid`, `province`, `city`, `state`, `createtime`)
+       VALUES (#{aid}, #{province},#{city},#{state},#{createtime});
+    </insert>
+
+
+
+</mapper>

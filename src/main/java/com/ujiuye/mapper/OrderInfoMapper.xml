@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.mapper.OrderInfoMapper" >
+
+    <resultMap id="baseResultMap" type="com.ujiuye.pojo.OrderInfo">
+        <id property="onum" column="onum"/>
+        <result property="eid" column="eid"/>
+        <result property="price" column="price"/>
+        <result property="fromname" column="fromname"/>
+        <result property="fromaddress" column="fromaddress"/>
+        <result property="fromtel" column="fromtel"/>
+        <result property="toname" column="toname"/>
+        <result property="toaddress" column="toaddress"/>
+        <result property="totel" column="totel"/>
+        <result property="fromCardNum" column="fromCardNum"/>
+        <result property="state" column="state"/>
+        <result property="createtime" column="createtime"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.ujiuye.pojo.OrderInfo">
+        INSERT INTO `orderinfo`(`onum`, `eid`, `price`, `fromname`, `fromaddress`, `fromtel`, `toname`, `toaddress`, `totel`, `fromCardNum`, `state`, `createtime`)
+        VALUES (#{onum},#{eid},#{price},#{fromname},#{fromaddress},#{fromtel},#{toname},#{toaddress},#{totel},#{fromCardNum},#{state},#{createtime});
+    </insert>
+
+    <select id="listByStats" resultMap="baseResultMap">
+        SELECT * FROM orderinfo WHERE state=#{stats}
+    </select>
+
+
+    <select id="getByOnum" resultMap="baseResultMap">
+        SELECT * FROM orderinfo WHERE onum=#{onum}
+    </select>
+
+    <update id="update" parameterType="com.ujiuye.pojo.OrderInfo">
+        UPDATE `orderinfo`
+        SET `eid` = #{eid}, `price` = #{price}, `fromname` =#{fromname}, `fromaddress` = #{fromaddress}, `fromtel` = #{fromtel}, `toname` = #{toname}, `toaddress` = #{toaddress}, `totel` = #{totel}, `fromCardNum` = #{fromCardNum}, `state` = #{state}, `createtime` = #{createtime}
+        WHERE `onum` = #{onum};
+    </update>
+
+    <select id="count" resultType="com.ujiuye.pojo.DataResult">
+        SELECT COUNT(*) as count, store.sname FROM orderinfo,employee,store
+        WHERE orderinfo.eid=employee.eid AND employee.sid=store.sid
+        GROUP BY store.sname
+    </select>
+
+
+
+
+</mapper>

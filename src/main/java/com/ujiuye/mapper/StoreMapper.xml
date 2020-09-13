@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.mapper.StoreMapper" >
+
+    <resultMap id="baseResultMap" type="com.ujiuye.pojo.Store">
+        <id property="sid" column="sid"/>
+        <result property="sid" column="sid"/>
+        <result property="lid" column="lid"/>
+        <result property="sname" column="sname"/>
+        <result property="address" column="address"/>
+        <result property="state" column="state"/>
+        <result property="createtime" column="createtime"/>
+        <result property="aid" column="aid"/>
+        <result property="remark" column="remark"/>
+        <association property="area" column="aid" javaType="com.ujiuye.pojo.Area" select="com.ujiuye.mapper.AreaMapper.getById"/>
+        <association property="level" column="lid" javaType="com.ujiuye.pojo.Level" select="com.ujiuye.mapper.LevelMapper.getById"/>
+    </resultMap>
+
+    <select id="getBySid" resultMap="baseResultMap">
+        SELECT * FROM store WHERE sid=#{sid}
+    </select>
+
+    <select id="list" resultMap="baseResultMap">
+        SELECT * FROM store
+    </select>
+
+    <insert id="save" parameterType="com.ujiuye.pojo.Store">
+        INSERT INTO `store`(`sid`, `lid`, `sname`, `address`, `state`, `createtime`, `aid`, `remark`)
+        VALUES (#{sid},#{lid},#{sname},#{address},#{state},#{createtime},#{aid},#{remark});
+    </insert>
+</mapper>

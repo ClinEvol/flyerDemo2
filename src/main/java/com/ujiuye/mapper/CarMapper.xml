@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.mapper.CarMapper" >
+
+    <resultMap id="baseResultMap" type="com.ujiuye.pojo.Car">
+        <id property="cid" column="cid"/>
+        <result property="carnum" column="carnum"/>
+        <result property="tosid" column="tosid"/>
+        <result property="fromsid" column="fromsid"/>
+        <result property="state" column="state"/>
+        <result property="createtime" column="createtime"/>
+        <association property="fromStore" column="fromsid" javaType="com.ujiuye.pojo.Store" select="com.ujiuye.mapper.StoreMapper.getBySid"/>
+        <association property="toStore" column="tosid" javaType="com.ujiuye.pojo.Store" select="com.ujiuye.mapper.StoreMapper.getBySid"/>
+    </resultMap>
+
+
+
+    <select id="listByStateAndSid" resultMap="baseResultMap">
+        SELECT * FROM car WHERE state=#{state} AND (fromsid=#{sid} or tosid=#{sid})
+    </select>
+
+    <update id="update" parameterType="com.ujiuye.pojo.Car">
+        UPDATE `car`
+        SET `carnum` = #{carnum}, `state` = #{state}, `createtime` = #{createtime}, `fromsid` = #{fromsid}, `tosid` = #{tosid}
+        WHERE `cid` = #{cid};
+    </update>
+
+    <select id="getById" resultMap="baseResultMap">
+        SELECT * FROM car WHERE `cid` = #{cid};
+    </select>
+
+
+    <insert id="save" parameterType="com.ujiuye.pojo.Car">
+        INSERT INTO `car`(`cid`, `carnum`, `state`, `createtime`, `fromsid`, `tosid`)
+        VALUES (#{cid},#{carnum}, #{state}, #{createtime},#{fromsid},#{tosid});
+    </insert>
+
+</mapper>

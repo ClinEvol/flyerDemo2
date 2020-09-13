@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.mapper.SendRecodeMapper" >
+
+    <resultMap id="baseResultMap" type="com.ujiuye.pojo.SendRecode">
+        <id property="srid" column="srid"/>
+        <result property="eid" column="eid"/>
+        <result property="state" column="state"/>
+        <result property="upatetime" column="upatetime"/>
+        <result property="oid" column="oid"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.ujiuye.pojo.SendRecode">
+        INSERT INTO `sendrecord`(`srid`, `eid`, `state`, `upatetime`, `oid`)
+        VALUES (#{srid},#{eid},#{state},#{upatetime},#{oid});
+    </insert>
+
+</mapper>

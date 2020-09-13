@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.mapper.CarOrderMapper" >
+
+    <resultMap id="baseResultMap" type="com.ujiuye.pojo.CarOrder">
+        <result property="cid" column="cid"/>
+        <result property="oid" column="oid"/>
+        <result property="state" column="state"/>
+        <association property="orderInfo" column="oid" javaType="com.ujiuye.pojo.OrderInfo" select="com.ujiuye.mapper.OrderInfoMapper.getByOnum"/>
+    </resultMap>
+
+    <select id="list" resultMap="baseResultMap">
+        SELECT * FROM carorder WHERE state=#{state}
+        <foreach collection="cidList" item="cid" separator="," open="AND cid in(" close=")">
+            #{cid}
+        </foreach>
+    </select>
+
+
+    <insert id="save" parameterType="com.ujiuye.pojo.CarOrder">
+        INSERT INTO `carorder`(`cid`, `oid`, `state`)
+        VALUES (#{cid},#{oid},#{state});
+    </insert>
+
+    <delete id="remove">
+        delete from `carorder` where `oid`=#{oid}
+    </delete>
+
+    <update id="updateStateByCid">
+        UPDATE `carorder`
+        SET `state` = #{state}
+        WHERE `cid` = #{cid}
+    </update>
+
+
+</mapper>
